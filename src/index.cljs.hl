@@ -1,21 +1,13 @@
 (page "index.html"
       (:require [stub-page]))
 
-(defn update-article-body [elem]
-  (.log js/console elem)
+(defn replace-article-body [elem]
   (.html (js/jQuery elem) @stub-page/article-body))
 
-(defn doc-ready-handler []
-  (update-article-body (.first (js/jQuery id))))
+(defn find-and-replace-article-body []
+  (replace-article-body (.first (js/jQuery "#article-body"))))
 
-(defn on-ready [fn]
-  (aset js/document
-        "onreadystatechange"
-        (fn []
-          (let [ready-state (. js/document -readyState)]
-            (when (= "complete" ready-state)
-              (fn))))))
-
+(add-initfn! find-and-replace-article-body)
 
 (html :class "no-js" :lang "en"
       (head
@@ -24,8 +16,6 @@
        (title "Mnemata")
        (link :rel "stylesheet" :type "text/css" :href "css/app.css")
        (script :src "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"))
-
-      (on-ready doc-ready-handler)
       (body
        (div :class "contain-to-grid sticky"
             :data-options "stick_on: large"
@@ -36,6 +26,12 @@
                               (div :class "large-8 small-9 columns"
                                    (input :type "text" :placeholder "Search articles")))))
                  (section :class "top-bar-section"
+                          (ul :class "middle"
+                              (li
+                               (a :href "#" @stub-page/article-title))
+                              (li
+                               (a :href "#"
+                                  (text "seen at ~{stub-page/published-by}"))))
                           (ul :class "right"
                               (li
                                (a :href "#" "Rate"))
@@ -54,7 +50,12 @@
                       (a :href "#" "Explore"))
                      (li :class "divider")
                      (li
-                      (a :href "#" "Subscriptions"))))
+                      (a :href "#" "Subscriptions"))
+                     (li :class "divider")
+                     (loop-tpl :bindings [category stub-page/categories]
+                               (li
+;;                                (span :class "count" "1")
+                                (a :href "#" @category)))))
             (div :class "large-8 columns article"
                  (img :src @stub-page/hero-image-url)
                  (div :class "headline"
@@ -62,6 +63,5 @@
                  (aside
                   (text "published by ")
                   (a :href "#" (text "~{stub-page/published-by}"))
-                  (text "2 minutes read"))
-                 (div :class "article-body" :id "article-body")
-                 ))))
+                  (text "17 minute read"))
+                 (div :class "article-body" :id "article-body")))))
