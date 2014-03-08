@@ -1,4 +1,21 @@
-(page "index.html")
+(page "index.html"
+      (:require [stub-page]))
+
+(defn update-article-body [elem]
+  (.log js/console elem)
+  (.html (js/jQuery elem) @stub-page/article-body))
+
+(defn doc-ready-handler []
+  (update-article-body (.first (js/jQuery id))))
+
+(defn on-ready [fn]
+  (aset js/document
+        "onreadystatechange"
+        (fn []
+          (let [ready-state (. js/document -readyState)]
+            (when (= "complete" ready-state)
+              (fn))))))
+
 
 (html :class "no-js" :lang "en"
       (head
@@ -7,12 +24,44 @@
        (title "Mnemata")
        (link :rel "stylesheet" :type "text/css" :href "css/app.css")
        (script :src "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"))
+
+      (on-ready doc-ready-handler)
       (body
+       (div :class "contain-to-grid sticky"
+            :data-options "stick_on: large"
+            (nav :class "top-bar" :data-topbar true
+                 (ul :class "title-area"
+                     (li :class "has-form"
+                         (div :class "row collapse"
+                              (div :class "large-8 small-9 columns"
+                                   (input :type "text" :placeholder "Search articles")))))
+                 (section :class "top-bar-section"
+                          (ul :class "right"
+                              (li
+                               (a :href "#" "Rate"))
+                              (li
+                               (a :href "#" "Share"))))))
        (div :class "row"
-            (div :class "large-12 columns"
-                 (h1 "Hello, World!")))
-       (div :class "row"
-            (div :class "large-12 columns"
-                 (div :class "panel"
-                      (h3 "test")
-                      (p "Just a test"))))))
+            (div :class "columns large-3 medium-4"
+                 (ul :class "side-nav"
+                     (li
+                      (label "Mnemata (logo)"))
+                     (li
+                      (a :href "#" "Unread"))
+                     (li
+                      (a :href "#" "Favorites"))
+                     (li
+                      (a :href "#" "Explore"))
+                     (li :class "divider")
+                     (li
+                      (a :href "#" "Subscriptions"))))
+            (div :class "large-8 columns article"
+                 (img :src @stub-page/hero-image-url)
+                 (div :class "headline"
+                      (h1 (text "~{stub-page/article-title}")))
+                 (aside
+                  (text "published by ")
+                  (a :href "#" (text "~{stub-page/published-by}"))
+                  (text "2 minutes read"))
+                 (div :class "article-body" :id "article-body")
+                 ))))
