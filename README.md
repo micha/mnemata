@@ -1,22 +1,29 @@
 # mnemata
 
-A Hoplon project designed to...well, that part is up to you.
+A Hoplon project with Foundation for CSS (and its friends Bower and Grunt to compile the SCSS)
 
 ## Dependencies
 
 - java 1.7+
 - [boot][1]
 - [leiningen][2]
+- bower, grunt-cli
 
 ## Usage
 
-You'll probably want to have two terminals open in your project's
+You'll probably want to have two (or more) terminals open in your project's
 directory.
 
 1. Start the auto-compiler.
 
 ```bash
 $ boot watch hoplon
+```
+
+2. Compile the scss if you haven't yet:
+
+```bash
+$ grunt
 ```
 
 2. Open the compiled html file.
@@ -29,7 +36,12 @@ $ open resources/public/index.html
 
 ## License
 
-Copyright © 2014, **Your Name Goes Here**
+Copyright © 2014, **Matt Gauger**
+
+Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
+
+---
+
 
 [1]: https://github.com/tailrecursion/boot
 [2]: https://github.com/technomancy/leiningen
