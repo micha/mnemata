@@ -5,6 +5,7 @@
        (meta :charset "utf-8")
        (meta :name "viewport" :content "width=device-width, initial-scale=1.0")
        (title "Mnemata")
-       (link :rel "stylesheet" :type "text/css" :href "css/app.css"))
+       (link :rel "stylesheet" :type "text/css" :href "css/app.css")
+       (script :src "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"))
       (body
        (h1 "Hello, World!")))
