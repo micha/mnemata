@@ -8,4 +8,11 @@
        (link :rel "stylesheet" :type "text/css" :href "css/app.css")
        (script :src "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"))
       (body
-       (h1 "Hello, World!")))
+       (div :class "row"
+            (div :class "large-12 columns"
+                 (h1 "Hello, World!")))
+       (div :class "row"
+            (div :class "large-12 columns"
+                 (div :class "panel"
+                      (h3 "test")
+                      (p "Just a test"))))))
