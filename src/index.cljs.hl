@@ -4,8 +4,9 @@
 (defn replace-article-body [elem]
   (.html (js/jQuery elem) @stub-page/article-body))
 
-(defn find-and-replace-article-body []
-  (replace-article-body (.first (js/jQuery "#article-body"))))
+(defn find-and-replace-article-body [elem]
+  (replace-article-body (.first (js/jQuery elem)))
+  elem)
 
 (add-initfn! find-and-replace-article-body)
 
@@ -64,4 +65,5 @@
                   (text "published by ")
                   (a :href "#" (text "~{stub-page/published-by}"))
                   (text "17 minute read"))
-                 (div :class "article-body" :id "article-body")))))
+                 (find-and-replace-article-body
+                   (div :class "article-body" :id "article-body"))))))
